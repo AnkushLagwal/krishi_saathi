@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Services | Krishi-Saathi</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Cormorant+Garamond:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #0c2e0c !important;
+            padding: 12px 30px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+        }
+
+        .navbar-brand h6 {
+            font-size: 0.65rem;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar Links */
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect */
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            /* Gold on hover */
+        }
+
+        /* Active Link Highlight */
+        .navbar-nav .nav-link.active {
+            color: #ffd700 !important;
+            font-weight: 600;
+        }
+
+        /* Underline Animation */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Toggler Icon Fix */
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        /* Default Navbar */
+        #mainNavbar {
+            background-color: #0c2e0c !important;
+            padding: 18px 30px;
+            transition: all 0.3s ease;
+        }
+
+        /* Shrinked Navbar on Scroll */
+        #mainNavbar.shrink {
+            padding: 8px 30px;
+            background-color: #0c2e0c !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        #mainNavbar .navbar-brand {
+            font-size: 1.3rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand {
+            font-size: 1.1rem;
+        }
+
+        #mainNavbar .navbar-brand h6 {
+            font-size: 0.65rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand h6 {
+            font-size: 0.55rem;
+        }
+
+        /* Optional: show dropdown on hover */
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        /* Dropdown item hover effect */
+        .dropdown-item:hover {
+            background-color: #2E7D32 !important;
+            color: #fff !important;
+        }
+
+        /* Navbar link hover */
+        .nav-link:hover {
+            color: #C8E6C9 !important;
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-card {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 250px;
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        .profile-card.active {
+            display: block;
+        }
+
+        .profile-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* update buttton of profile section of registerd user */
+        .update-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            background-color: #f1f8e9;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 30px 25px;
+            z-index: 9999;
+            overflow-y: auto;
+            border-radius: 15px;
+            transition: all 0.4s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .update-panel.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+
+        .update-panel .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #228b22;
+            color: #fff;
+            border: 2px solid #228b22;
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .update-panel .back-btn:hover {
+            background-color: #1b5e20;
+            transform: scale(1.08);
+        }
+
+        .panel-header h2 {
+            font-family: 'playfair Display', serif;
+            color: #2e7d32;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 28px;
+            margin-bottom: 5px;
+        }
+
+        .panel-header h6 {
+            font-family: 'playfair Display', serif;
+            color: #2e7d32;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxhcHBsZXN8ZW58MHx8fHwxNzU5NTk1ODE1fDA&ixlib=rb-4.1.0&q=85') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Push content to bottom */
+            align-items: center;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 2.8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+        /* Services Section */
+        /* Section Titles */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        .services {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .service-card {
+            border: none;
+            border-radius: 20px;
+            transition: 0.3s;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card img {
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        /* Farmer Section */
+        /* Farmers Section Background Only */
+        .farmers-section {
+            background-color: #002d16;
+            /* Dark green background */
+            color: #ffffff;
+            /* Default text color white */
+            padding: 60px 0;
+            /* Top and bottom spacing */
+            text-align: center;
+        }
+
+        .farmers-section .section-title {
+            color: #ffffff;
+            /* White section title */
+            font-family: 'Playfair Display', serif;
+        }
+
+        .farmers-section p {
+            color: #c1d9b3;
+            /* Slightly lighter text for paragraph */
+        }
+
+        .farmers-section .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .farmers-section .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .farmers-section img {
+            height: 230px;
+            object-fit: cover;
+        }
+
+
+        /* Farmer Panel */
+        /* Farmer Panel Container (Centered Popup) */
+        .farmer-panel-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
+
+        /* Actual Content Box */
+        .farmer-panel-content {
+            background: #fff;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            animation: fadeInScale 0.3s ease;
+        }
+
+        /* Smooth open animation */
+        @keyframes fadeInScale {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 576px) {
+            .farmer-panel-content {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .table thead {
+                font-size: 13px;
+            }
+
+            .table td {
+                font-size: 13px;
+            }
+        }
+
+
+        /* Notification Section */
+        .notification-section {
+            padding: 50px 0;
+            background: #d6ecd1;
+        }
+
+        /* Schemes Section */
+        .schemes {
+            padding: 60px 0;
+        }
+
+        .scheme-card {
+            border-radius: 15px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .scheme-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Gallery */
+        .gallery-section {
+            background-color: #f8f9fa;
+        }
+
+        .gallery-section .card {
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-section .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-section .btn-success {
+            border-radius: 25px;
+            padding: 8px 20px;
+            transition: 0.3s;
+        }
+
+        .gallery-section .btn-success:hover {
+            background-color: #28a745;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: url("https://source.unsplash.com/1600x800/?farm,field") center/cover no-repeat;
+            background-blend-mode: darken;
+            background-color: #0c2e0c;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            color: white;
+        }
+
+        #contact .form-control {
+            /* Input & Textarea Styles */
+            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #contact .form-control:hover {
+            /* Hover Effect */
+            border-color: #ffd700;
+            /* Gold border on hover */
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+
+        #contact .form-control:focus {
+            /* Focus Effect (when clicked) */
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            outline: none;
+        }
+
+        #contact button {
+            /* Button */
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s ease;
+        }
+
+        #contact button:hover {
+            /* Button Hover */
+            background: #ffd700;
+            color: #0c2e0c;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* About Section */
+        #about {
+            background: #d6ecd1;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            color: black;
+        }
+
+        .about-box {
+            background: #d6ecd1;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #about h5 {
+            /* Headings with Icons */
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .about-link {
+            /* Quick Links */
+            color: black;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-block;
+            margin: 6px 0;
+        }
+
+        .about-link:hover {
+            color: #0c2e0c;
+            transform: translateX(5px);
+        }
+
+        .social-icons a {
+            /* Social Icons */
+            font-size: 20px;
+            color: #0c2e0c;
+            margin: 0 8px;
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #145214;
+            transform: scale(1.2);
+        }
+
+        #about hr {
+            /* Divider */
+            border: 0;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin: auto;
+        }
+
+        /* Footer */
+        .footer {
+            color: #fff;
+        }
+
+        .footer .text-center {
+            background-color: #0c2e0c;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Navbar -->
+    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top shadow-sm" style="background-color:#4CAF50;">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex flex-column align-items-center text-white" href="#">
+                Krishi-Saathi
+                <h6 style="font-size:0.7rem;">कृषिर्मूलं स्वराज्यस्य</h6>
+            </a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/contact}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active text-white" th:href="@{/farmer-login}">Services</a>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/about}">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/more}">More</a></li>
+                </ul>
+                <!-- Profile Icon -->
+                <div class="profile-dropdown ms-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile"
+                        class="rounded-circle" style="width:45px; cursor:pointer;" id="profileIcon"
+                        onclick="toggleProfileCard()">
+
+                    <div class="profile-card" id="profileCard"
+                        style="display:none; border:1px solid #ddd; padding:15px; border-radius:8px; width:200px; background:#fff; position:absolute; z-index:100;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile"
+                            class="rounded-circle mx-auto d-block" style="width:100px;">
+                        <h6 class="text-center mt-2">Farmer Name</h6>
+                        <p class="text-center text-muted mb-1">+91 9805657931</p>
+                        <hr>
+                        <p><strong>Tehsil:</strong> <span>Tehsil</span></p>
+                        <p><strong>District:</strong> <span>District</span></p>
+                        <button class="btn btn-success w-100 btn-sm mt-2" onclick="openUpdatePanel()">
+                            Update Profile
+                        </button>
+                        <button class="btn btn-danger w-100 btn-sm mt-2" onclick="logout()">
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+    <!-- Update Profile Slide Panel -->
+    <div class="update-panel" id="updatePanel">
+        <button class="back-btn" onclick="closeUpdatePanel()">← Back</button>
+
+        <div class="panel-header">
+            <h2>Update Profile</h2>
+            <h6>Edit your details below</h6>
+        </div>
+
+        <div class="panel-content">
+            <form action="#" method="post" enctype="multipart/form-data">
+                <!-- Farmer Name -->
+                <input type="text" class="form-control" placeholder="Enter your name" required>
+
+                <!-- Gender -->
+                <div class="d-flex gap-3 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="Male">
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="Female">
+                        <label class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="Other">
+                        <label class="form-check-label">Other</label>
+                    </div>
+                </div>
+
+                <!-- Aadhaar -->
+                <input type="text" class="form-control" placeholder="Enter Aadhaar number" required pattern="[0-9]{12}">
+
+                <!-- Photo -->
+                <input type="file" name="photoFile" class="form-control" accept="image/*"
+                    onchange="previewUpdatePhoto(event)">
+                <img id="updatePhotoPreview" alt="Photo" class="img-fluid mt-2" style="max-width:120px;">
+
+                <!-- Address Fields -->
+                <input type="text" class="form-control mb-2" placeholder="Street/Locality" required>
+                <div class="row mb-2">
+                    <div class="col-md-6 mb-2">
+                        <input type="text" id="updatePincode" class="form-control" placeholder="Pincode" required
+                            onblur="fetchUpdateAddressByPincode()">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <input type="text" id="updateTehsil" class="form-control" placeholder="Tehsil" required>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <input type="text" id="updateDistrict" class="form-control" placeholder="District" required>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <input type="text" id="updateState" class="form-control" placeholder="State" required>
+                    </div>
+                </div>
+
+                <!-- Mobile & Email -->
+                <input type="text" class="form-control mb-2" placeholder="Mobile Number" required>
+                <input type="email" class="form-control mb-2" placeholder="Email">
+
+                <!-- Password -->
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Password" required>
+                    <button class="btn btn-outline-secondary" type="button"
+                        onclick="toggleUpdatePassword()">👁️</button>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 btn-sm mt-2">Update</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Our Agricultural Services</h1>
+        <p>Explore the opportunities, activities, and creative collaborations offered by our clubs</p>
+    </section>
+
+    <!-- Services -->
+    <section class="services container">
+        <h2 class="section-title text-center text-black">Explore Our Modules</h2>
+        <div class="row g-4">
+
+            <!-- Crop Guidance -->
+            <div class="col-md-3">
+                <a th:href="@{/crop-guidance}" class="text-decoration-none text-dark">
+                    <div class="card service-card">
+                        <img src="https://img.freepik.com/free-photo/agronomist-field_1303-10088.jpg"
+                            alt="Crop Guidance">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Crop Guidance</h5>
+                            <p>Get expert advice for better yield and pest management.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Market Price Analysis -->
+            <div class="col-md-3">
+                <a th:href="@{/market-price-analysis}" class="text-decoration-none text-dark">
+                    <div class="card service-card">
+                        <img src="https://img.freepik.com/free-photo/graph-data-analysis_53876-95295.jpg" alt="Market">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Market Price Analysis</h5>
+                            <p>Track real-time commodity rates and make smart selling decisions.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Transport Facilities -->
+            <div class="col-md-3">
+                <a th:href="@{/transport-facilities}" class="text-decoration-none text-dark">
+                    <div class="card service-card">
+                        <img src="https://img.freepik.com/free-photo/truck-rural-road_1112-2247.jpg" alt="Transport">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Transport Facilities</h5>
+                            <p>Book vehicles and track transport availability easily.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Profit Calculator -->
+            <div class="col-md-3">
+                <a th:href="@{/profit-calculator}" class="text-decoration-none text-dark">
+                    <div class="card service-card">
+                        <img src="https://img.freepik.com/free-photo/financial-analysis-accounting_53876-92909.jpg"
+                            alt="Profit Calculator">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Profit Calculator</h5>
+                            <p>Calculate estimated profits and optimize expenses.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Our Farmers Section -->
+    <section class="farmers-section py-5 bg-light text-center">
+        <div class="container">
+            <h2 class="section-title text-center text-black">Our Farmers</h2>
+            <p class="text-muted mb-5">
+                Meet the backbone of our nation — the hardworking farmers who make everything possible.
+            </p>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Farmer 1 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            class="card-img-top rounded-top" alt="Farmer 1">
+                        <div class="card-body">
+                            <h5 class="card-title text-success mb-1">Ramesh Kumar</h5>
+                            <p class="card-text text-muted mb-1">Tehsil: Palampur</p>
+                            <p class="card-text text-muted">District: Kangra</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farmer 2 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <img src="https://img.freepik.com/free-photo/farmer-standing-against-sunset-sky_1150-26896.jpg"
+                            class="card-img-top rounded-top" alt="Farmer 2">
+                        <div class="card-body">
+                            <h5 class="card-title text-success mb-1">Suresh Thakur</h5>
+                            <p class="card-text text-muted mb-1">Tehsil: Baijnath</p>
+                            <p class="card-text text-muted">District: Kangra</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farmer 3 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <img src="https://img.freepik.com/free-photo/portrait-indian-farmer-field_1150-26608.jpg"
+                            class="card-img-top rounded-top" alt="Farmer 3">
+                        <div class="card-body">
+                            <h5 class="card-title text-success mb-1">Amit Verma</h5>
+                            <p class="card-text text-muted mb-1">Tehsil: Mandi</p>
+                            <p class="card-text text-muted">District: Mandi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farmer 4 -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            class="card-img-top rounded-top" alt="Farmer 4">
+                        <div class="card-body">
+                            <h5 class="card-title text-success mb-1">Manoj Sharma</h5>
+                            <p class="card-text text-muted mb-1">Tehsil: Hamirpur</p>
+                            <p class="card-text text-muted">District: Hamirpur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Registered Farmers Button -->
+            <div class="text-center mt-5">
+                <button class="btn btn-success px-4 py-2 rounded-pill shadow-sm" onclick="openFarmers()">
+                    View Registered Farmers
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Farmer List Panel -->
+    <div class="farmer-panel-container" id="farmerPanel">
+        <div class="farmer-panel-content">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                <h5 class="text-success mb-0">Registered Farmers</h5>
+                <button class="btn btn-sm btn-outline-danger" onclick="closeFarmers()">Close</button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-3">
+                <input type="text" id="farmerSearch" class="form-control"
+                    placeholder="🔍 Search by name, village, tehsil, or district..." onkeyup="searchFarmers()">
+            </div>
+
+            <!-- Farmer Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle" id="farmerTable">
+                    <thead class="table-success text-center">
+                        <tr>
+                            <th>Name</th>
+                            <th>Village</th>
+                            <th>Tehsil</th>
+                            <th>District</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Thymeleaf iteration -->
+                        <tr th:each="farmer : ${farmers}">
+                            <td th:text="${farmer.name}">Farmer Name</td>
+                            <td th:text="${farmer.street}">Village</td>
+                            <td th:text="${farmer.tehsil}">Tehsil</td>
+                            <td th:text="${farmer.district}">District</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notifications -->
+    <section class="notification-section text-center">
+        <div class="container">
+            <h2 class="fw-bold text-success mb-4">Latest Updates</h2>
+            <p>🌾 New government subsidy announced for organic farmers!</p>
+            <p>💧 Irrigation maintenance drive scheduled on Oct 15th.</p>
+        </div>
+    </section>
+
+    <!-- Schemes -->
+    <section class="schemes container text-center">
+        <h2 class="section-title text-center text-black">Important Government Schemes</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card scheme-card p-3">
+                    <h5>PM Kisan Samman Nidhi</h5>
+                    <p>₹6000/year assistance directly to farmer accounts.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card scheme-card p-3">
+                    <h5>Soil Health Card</h5>
+                    <p>Track your soil nutrients and improve fertility.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card scheme-card p-3">
+                    <h5>Crop Insurance Yojana</h5>
+                    <p>Secure your crops against natural disasters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery-section text-center py-5">
+        <div class="container">
+            <h2 class="text-success fw-bold mb-4">Gallery</h2>
+            <div class="row justify-content-center g-4">
+
+                <!-- PHOTO GALLERY CARD -->
+                <div class="col-md-5">
+                    <div class="card shadow-sm border-0">
+                        <img src="https://images.unsplash.com/photo-1693643846446-67fae09fc7e1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxhcHBsZXMlMkNnYXJkZW58ZW58MHx8fHwxNzU5NTk1ODk0fDA&ixlib=rb-4.1.0&q=85"
+                            class="card-img-top" alt="Photo Gallery" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h4 class="card-title text-success fw-bold">Photo Gallery</h4>
+                            <p class="card-text text-muted">Explore the collection of photos from our farming community,
+                                showcasing dedication and progress in agriculture.</p>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#photoGalleryModal">
+                                View More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIDEO GALLERY CARD -->
+                <div class="col-md-5">
+                    <div class="card shadow-sm border-0">
+                        <video class="card-img-top" controls style="height: 250px; object-fit: cover;">
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="card-body">
+                            <h4 class="card-title text-success fw-bold">Video Gallery</h4>
+                            <p class="card-text text-muted">Watch informative videos, success stories, and agricultural
+                                awareness clips shared by fellow farmers.</p>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#videoGalleryModal">
+                                View More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY MODAL -->
+    <div class="modal fade" id="photoGalleryModal" tabindex="-1" aria-labelledby="photoGalleryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="photoGalleryModalLabel">Photo Gallery</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1669446027384-c22b6bff4180?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxmYXJtZXIlMkNjcm9wcyUyQ3RyYW5zcG9ydCUyQ21hcmtldCUyQ2FwcGxlfGVufDB8fHx8MTc1OTM4OTE2MHww&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1498408040764-ab6eb772a145?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxjcm9wc3xlbnwwfHx8fDE3NTkzOTA1NTB8MA&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1529511582893-2d7e684dd128?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHx3aGVhdHxlbnwwfHx8fDE3NTk1OTc0MTd8MA&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1634467524884-897d0af5e104?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxjb3JufGVufDB8fHx8MTc1OTU5NzQ3M3ww&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1650223154381-cef156da1851?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHxjYXBzaWN1bSUyQ2dyZWVuaG91c2V8ZW58MHx8fHwxNzU5NTk3NTY5fDA&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                        <div class="col-md-4"><img
+                                src="https://images.unsplash.com/photo-1723234387588-756c4d1e3e1a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3ODA2MzB8MHwxfHNlYXJjaHwxfHx0b21hdG8lMkNvcmNoYXJkfGVufDB8fHx8MTc1OTU5NzY3N3ww&ixlib=rb-4.1.0&q=85"
+                                class="img-fluid rounded shadow-sm" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO GALLERY MODAL -->
+    <div class="modal fade" id="videoGalleryModal" tabindex="-1" aria-labelledby="videoGalleryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="videoGalleryModalLabel">Video Gallery</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <!-- 1 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://sample-videos.com/video321/mp4/720/sample_640x360.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source
+                                    src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="col-md-6">
+                            <video class="w-100 rounded shadow-sm" controls>
+                                <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="text-center">
+        <div class="container">
+            <h2 class="section-title text-white">Get in Touch</h2>
+            <p class="mb-4">We would love to hear from you. Fill out the form below and we will get back to you soon.
+            </p>
+            <form class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="tel" name="mobile" class="form-control" placeholder="Enter Mobile Number" required
+                        pattern="[0-9]{10}" title="Enter 10-digit mobile number">
+                </div>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" placeholder="Your Email">
+                </div>
+                <div class="col-10">
+                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <div class="col-10">
+                    <button type="submit" class="btn btn-light">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="text-center">
+        <div class="row">
+            <!-- About -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-info-circle-fill me-2"></i> About Us
+                </h5>
+                <p>
+                    We create innovative digital solutions to help businesses and individuals
+                    build a strong online presence. Our mission is to deliver quality,
+                    creativity, and long-term value to our clients.
+                </p>
+                <p>
+                    <strong>Our Mission:</strong> To empower communities with modern, reliable,
+                    and affordable technology solutions.
+                </p>
+                <p>
+                    <strong>Our Vision:</strong> To become a trusted digital partner for
+                    individuals, farmers, and businesses across the globe.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-link-45deg me-2"></i> Quick Links
+                </h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="about-link">Home</a></li>
+                    <li><a href="#" class="about-link">Services</a></li>
+                    <li><a href="#" class="about-link">About</a></li>
+                    <li><a href="#" class="about-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-envelope-paper-fill me-2"></i> Contact
+                </h5>
+                <p><i class="bi bi-geo-alt-fill me-2"></i> Solan, Himachal Pradesh</p>
+                <p><i class="bi bi-telephone-fill me-2"></i>+91 9805657931</p>
+                <p><i class="bi bi-envelope-fill me-2"></i>info@example.com</p>
+
+                <!-- Social Media -->
+                <div class="social-icons mt-3">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center"
+        style="background: url('https://source.unsplash.com/1600x900/?technology,business') no-repeat center center/cover;">
+        <div class="text-center p-4">
+            © 2025 Krishi Saathi | Designed by <strong>Tech-Innovators</strong>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const profileIcon = document.getElementById("profileIcon");
+        const profileCard = document.getElementById("profileCard");
+        profileIcon.addEventListener("click", () => {
+            profileCard.classList.toggle("active");
+        });
+
+        const farmerPanel = document.getElementById("farmerPanel");
+        function showFarmers() {
+            farmerPanel.classList.add("active");
+        }
+        function closeFarmers() {
+            farmerPanel.classList.remove("active");
+        }
+    </script>
+
+    <!-- navbar -->
+    <script>
+        window.addEventListener("scroll", function () {
+            const navbar = document.getElementById("mainNavbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("shrink");
+            } else {
+                navbar.classList.remove("shrink");
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function toggleProfileCard() {
+            const card = document.getElementById('profileCard');
+            card.style.display = card.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function openUpdatePanel() {
+            alert("Open update profile panel here");
+        }
+
+        function logout() {
+            alert("Perform logout here");
+            // window.location.href = "farmer-login.html"; // uncomment to redirect
+        }
+    </script>
+
+
+    <!--update buttton of profile section of registerd user-->
+    <script>
+        // Open & close panel
+        function openUpdatePanel() {
+            document.getElementById("updatePanel").classList.add("active");
+        }
+
+        function closeUpdatePanel() {
+            document.getElementById("updatePanel").classList.remove("active");
+        }
+
+        // Password toggle
+        function toggleUpdatePassword() {
+            const input = document.querySelector("#updatePanel input[type='password']");
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        // Photo preview
+        function previewUpdatePhoto(event) {
+            const preview = document.getElementById('updatePhotoPreview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        // Pincode API autofill
+        function fetchUpdateAddressByPincode() {
+            const pincode = document.getElementById('updatePincode').value.trim();
+            if (pincode.length === 6) {
+                fetch(`https://api.postalpincode.in/pincode/${pincode}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data[0].Status === "Success") {
+                            const postData = data[0].PostOffice[0];
+                            document.getElementById('updateState').value = postData.State || "";
+                            document.getElementById('updateDistrict').value = postData.District || "";
+                            document.getElementById('updateTehsil').value = postData.Block || postData.SubDistrict || "";
+                        } else {
+                            alert("Pincode not found. Please enter manually.");
+                        }
+                    });
+            }
+        }
+    </script>
+
+
+
+    <!--FOR Farmer's Panel-->
+    <script>
+        // Open popup
+        function openFarmers() {
+            document.getElementById('farmerPanel').style.display = 'flex';
+        }
+
+        // Close popup
+        function closeFarmers() {
+            document.getElementById('farmerPanel').style.display = 'none';
+        }
+
+        // Live Search Functionality
+        function searchFarmers() {
+            const input = document.getElementById('farmerSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#farmerTable tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+
+
+</body>
+
+</html>

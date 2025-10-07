@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    container_name: krishi_saathi_db
+    environment:
+      MYSQL_DATABASE: krishi_saathi
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ankushlagwal2003
+      MYSQL_ROOT_PASSWORD: ankushlagwal2003
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  ml-api:
+    build:
+      context: ./ml-api
+    container_name: krishi_saathi_ml
+    ports:
+      - "8000:8000"
+
+  app:
+    build: .
+    container_name: krishi_saathi_app
+    depends_on:
+      - db
+      - ml-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/krishi_saathi
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ankushlagwal2003
+      PYTHON_API_URL: http://ml-api:8000/predict
+
+volumes:
+  db_data:

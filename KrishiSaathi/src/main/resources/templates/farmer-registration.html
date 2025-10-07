@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Farmer Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1695792302316-12a3fab84ea8') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 0;
+        }
+
+        .navbar {
+            background-color: #0c2e0c !important;
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #00ff99;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #00ff99, #00b894);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #23c71a, #1db543);
+            transform: scale(1.05);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #ff4b4b, #d63031);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        .btn-danger-custom:hover {
+            background: linear-gradient(45deg, #ff1e1e, #b22222);
+            transform: scale(1.05);
+            color: #fff !important;
+        }
+
+        /* Login Redirect */
+
+        .login-link {
+            color: #ffcc00;
+            /* yellow text */
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .login-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: #ffffff;
+            /* text turns white */
+            text-shadow: 0px 0px 8px #ffcc00;
+        }
+
+        .login-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        #photoPreview {
+            display: none;
+            margin-top: 10px;
+            border-radius: 10px;
+            max-height: 120px;
+        }
+
+        .progress {
+            height: 8px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h2>🌾 Farmer Registration</h2>
+
+            <!-- Progress bar -->
+            <div class="progress">
+                <div id="formProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="farmerForm" th:action="@{/farmer-registration}" th:object="${farmer}" method="post"
+                enctype="multipart/form-data">
+
+                <!-- Farmer Name -->
+                <div class="mb-3">
+                    <label class="form-label">Farmer Name</label>
+                    <input type="text" th:field="*{name}" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <!-- Gender -->
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{gender}" value="Male" required>
+                            <label class="form-check-label">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{gender}" value="Female">
+                            <label class="form-check-label">Female</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{gender}" value="Other">
+                            <label class="form-check-label">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aadhaar Card -->
+                <div class="mb-3">
+                    <label class="form-label">Aadhaar Number</label>
+                    <input type="text" th:field="*{aadharNo}" class="form-control" placeholder="Enter 12-digit Aadhaar"
+                        required pattern="[0-9]{12}">
+                </div>
+
+                <!-- Upload Photo -->
+                <div class="mb-3">
+                    <label class="form-label">Photo</label>
+                    <input type="file" name="photoFile" class="form-control" accept="image/*"
+                        onchange="previewPhoto(event)" required>
+                    <!-- keep image always in DOM, hidden until JS shows -->
+                    <img id="photoPreview" class="img-fluid mt-2" style="display:none;" alt="Farmer Photo" width="150">
+
+
+
+                </div>
+
+                <!-- Address -->
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea th:field="*{street}" class="form-control mb-2" placeholder="Street/Locality"
+                        required></textarea>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <input type="text" th:field="*{pincode}" id="pincode" class="form-control"
+                                placeholder="Pincode" required pattern="\d{6}" onblur="fetchAddressByPincode()">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <input type="text" th:field="*{tehsil}" id="tehsil" class="form-control"
+                                placeholder="Tehsil" required>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <input type="text" th:field="*{district}" id="district" class="form-control"
+                                placeholder="District" required>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <input type="text" th:field="*{state}" id="state" class="form-control" placeholder="State"
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="mb-3">
+                    <label class="form-label">Experience</label>
+                    <select th:field="*{experience}" class="form-select" required>
+                        <option value="">Select...</option>
+                        <option value="1 Year">1 Year</option>
+                        <option value="2 Years">2 Years</option>
+                        <option value="3 Years">3 Years</option>
+                        <option value="4 Years">4 Years</option>
+                        <option value="5 Years">5 Years</option>
+                        <option value="More than 5 Years">More than 5 Years</option>
+                        <option value="More than 10 Years">More than 10 Years</option>
+                        <option value="More than 20 Years">More than 20 Years</option>
+                    </select>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="mb-3">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="text" th:field="*{mobileNo}" class="form-control" placeholder="Enter mobile number"
+                        required pattern="[0-9]{10}">
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Enter your email">
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" th:field="*{password}" class="form-control" id="passwordField"
+                            placeholder="Enter password" required>
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                            👁️
+                        </button>
+                    </div>
+
+                </div>
+                <!-- Buttons -->
+                <div class="d-grid gap-3">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <a th:href="@{/}" class="btn btn-danger-custom">Back</a>
+                </div>
+
+                <!-- Login Redirect -->
+                <p class="text-center mt-3">
+                    Already registered? <a th:href="@{/farmer-login}" class="login-link">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function previewPhoto(event) {
+            const preview = document.getElementById('photoPreview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.style.display = "block"; // show after selecting
+        }
+
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordField');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        }
+
+
+        function fetchAddressByPincode() {
+            const pincode = document.getElementById('pincode').value.trim();
+            if (pincode.length === 6) {
+                fetch(`https://api.postalpincode.in/pincode/${pincode}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data[0].Status === "Success") {
+                            const postData = data[0].PostOffice[0];
+                            document.getElementById('state').value = postData.State || "";
+                            document.getElementById('district').value = postData.District || "";
+                            document.getElementById('tehsil').value = postData.Block || postData.SubDistrict || "";
+                        } else {
+                            alert("Pincode not found. Please enter manually.");
+                        }
+                    })
+                    .catch(err => console.error(err));
+            }
+        }
+
+        // Progress Bar Script
+        const form = document.getElementById('farmerForm');
+        const progress = document.getElementById('formProgress');
+        form.addEventListener('input', () => {
+            const total = form.querySelectorAll('input, select, textarea').length;
+            const filled = Array.from(form.querySelectorAll('input, select, textarea')).filter(el => el.value).length;
+            progress.style.width = (filled / total * 100) + "%";
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

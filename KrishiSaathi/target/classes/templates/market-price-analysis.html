@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Price Analysis | KrishiSaathi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0c2e0c;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://img.freepik.com/free-photo/truck-rural-road_1112-2247.jpg') center/cover no-repeat;
+            height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #fff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+            position: relative;
+            padding-left: 8%;
+            transition: all 0.3s ease;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            max-width: 600px;
+        }
+
+        .hero:hover {
+            transform: scale(1.02);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            background-color: #228b22;
+            color: #fff;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .back-btn:hover {
+            background-color: #1a661a;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(34, 139, 34, 0.4);
+        }
+
+        /* Feature Cards */
+        .features {
+            padding: 50px 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #228b22;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .feature-card button {
+            margin-top: 15px;
+            background-color: #228b22;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .feature-card button:hover {
+            background-color: #1a661a;
+            transform: scale(1.05);
+        }
+
+        /* Sliding Panel */
+        .panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 90%;
+            max-width: 600px;
+            background-color: #f1f8e9;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease-in-out;
+            z-index: 9999;
+        }
+
+        .panel.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+
+        .panel h2 {
+            color: #1b5e20;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .panel .form-control {
+            border-radius: 10px;
+            border: 1px solid #81c784;
+            margin-bottom: 12px;
+        }
+
+        .panel .predict-btn {
+            background-color: #2e7d32;
+            color: #fff;
+            width: 100%;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .panel .predict-btn:hover {
+            background-color: #1b5e20;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #e8f5e9;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Chart container */
+        #priceChart {
+            max-width: 100%;
+            height: 350px;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <a href="/services" class="back-btn">← Back to Services</a>
+        <h1>Market Price Analysis</h1>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="features">
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2907/2907990.png" alt="Price Trends">
+            <h3>Price Trends</h3>
+            <p>Analyze historical and current market prices of crops across regions.</p>
+            <button onclick="openPricePanel()">Analyze Prices</button>
+        </div>
+
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3143/3143476.png" alt="Price Forecast">
+            <h3>Price Forecast</h3>
+            <p>Get AI-based predictions of crop prices to plan your selling strategy.</p>
+            <button onclick="openPricePanel()">Forecast</button>
+        </div>
+    </section>
+
+    <!-- Sliding Panel -->
+    <div class="panel" id="pricePanel">
+        <a href="#" class="back-btn" onclick="closePricePanel()">← Back</a>
+        <h2>Market Price Analysis</h2>
+        <input type="text" class="form-control" id="cropName" placeholder="Enter Crop Name">
+        <input type="text" class="form-control" id="marketName" placeholder="Enter Market/City">
+        <button class="predict-btn" onclick="showChart()">Analyze</button>
+
+        <div class="result-box" id="priceResultBox">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function openPricePanel() {
+            document.getElementById('pricePanel').classList.add('active');
+        }
+
+        function closePricePanel() {
+            document.getElementById('pricePanel').classList.remove('active');
+        }
+
+        function showChart() {
+            const crop = document.getElementById('cropName').value;
+            const market = document.getElementById('marketName').value;
+
+            if (!crop || !market) {
+                alert("Please enter crop and market!");
+                return;
+            }
+
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            document.getElementById('priceResultBox').style.display = 'block';
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: `${crop} Price in ${market}`,
+                        data: [120, 130, 125, 140, 135, 150],
+                        borderColor: '#228b22',
+                        backgroundColor: 'rgba(34, 139, 34, 0.2)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false },
+                    scales: {
+                        y: { beginAtZero: false, title: { display: true, text: 'Price (₹/kg)' } },
+                        x: { title: { display: true, text: 'Month' } }
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

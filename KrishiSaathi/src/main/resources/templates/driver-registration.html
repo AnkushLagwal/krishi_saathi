@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Driver Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1619712228933-8df97ff31f87?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDQyNTV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTkxNjc5NTB8&ixlib=rb-4.1.0&q=85') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 0;
+        }
+
+        .registration-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .registration-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            width: 100%;
+            max-width: 700px;
+            color: white;
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .registration-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #00ff99;
+        }
+
+        .form-label {
+            color: #f2f4f3;
+            font-weight: 500;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #00ff99, #00b894);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #23c71a, #1db543);
+            transform: scale(1.05);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #ff4b4b, #d63031);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        .btn-danger-custom:hover {
+            background: linear-gradient(45deg, #ff1e1e, #b22222);
+            transform: scale(1.05);
+            color: #fff !important;
+        }
+
+        /* Login Redirect */
+
+        .login-link {
+            color: #ffcc00;
+            /* yellow text */
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .login-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: #ffffff;
+            /* text turns white */
+            text-shadow: 0px 0px 8px #ffcc00;
+        }
+
+        .login-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        #photoPreview {
+            display: none;
+            margin-top: 10px;
+            border-radius: 10px;
+            max-height: 120px;
+        }
+
+        .progress {
+            height: 8px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="registration-container">
+    <div class="registration-card">
+        <h2>🚛 Driver Registration</h2>
+
+        <!-- Progress bar -->
+        <div class="progress">
+            <div id="formProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+        </div>
+
+        <!-- ✅ Use Thymeleaf form binding -->
+        <form th:action="@{/driver-registration}" th:object="${driver}" method="post" enctype="multipart/form-data" id="driverForm">
+
+            <!-- Personal Info -->
+            <h6 class="mb-3">Personal Information</h6>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" th:field="*{name}" class="form-control" placeholder="Enter full name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="tel" th:field="*{mobile}" class="form-control" placeholder="Enter mobile number" required pattern="[0-9]{10}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email (optional)</label>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Photo</label>
+                    <input type="file" name="photoFile"  class="form-control" accept="image/*" onchange="previewPhoto(event)" required>
+                    <img id="photoPreview" class="img-fluid mt-2" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Enter password" required>
+                        <button class="btn btn-outline-light" type="button" onclick="togglePassword('password')"><i class="bi bi-eye"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Address Info -->
+            <h6 class="mb-3">Address Information</h6>
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <label class="form-label">Street</label>
+                    <input type="text" th:field="*{street}" class="form-control" placeholder="Street / Village" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Pincode</label>
+                    <input type="text" th:field="*{pincode}" id="pincode" class="form-control" placeholder="Pincode"
+                           required pattern="\d{6}" onblur="fetchAddressByPincode()">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Tehsil</label>
+                    <input type="text" th:field="*{tehsil}" id="tehsil" class="form-control" placeholder="Tehsil" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">District</label>
+                    <input type="text" th:field="*{district}" id="district" class="form-control" placeholder="District" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">State</label>
+                    <select th:field="*{state}" id="state" class="form-select" required>
+                        <option value="">Select State</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                            <option value="Chandigarh">Chandigarh</option>
+                            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman
+                                and Diu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Lakshadweep">Lakshadweep</option>
+                            <option value="Puducherry">Puducherry</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Vehicle Info -->
+            <h6 class="mb-3">Vehicle & Verification Information</h6>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Vehicle Owner Name</label>
+                    <input type="text" th:field="*{ownerName}" class="form-control" placeholder="Owner name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Vehicle Type/Model</label>
+                    <input type="text" th:field="*{vehicleModel}" class="form-control" placeholder="e.g. Tata Ace" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Vehicle Number</label>
+                    <input type="text" th:field="*{vehicleNo}" class="form-control" placeholder="e.g. HP12AB1234" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Pickup Capacity (in Tons)</label>
+                    <input type="number" th:field="*{capacity}" class="form-control" placeholder="e.g. 1500" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Driving License Number</label>
+                    <input type="text" th:field="*{dlNo}" class="form-control" placeholder="e.g. HP12 20220012345" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Upload RC Document</label>
+                    <input type="file" name="rcDocFile" class="form-control" accept=".pdf,.jpg,.png" required>
+                    <img id="photoPreview" class="img-fluid mt-2" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Upload Insurance Document</label>
+                    <input type="file" name="insuranceDocFile" class="form-control" accept=".pdf,.jpg,.png" required>
+                    <img id="photoPreview" class="img-fluid mt-2" />
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="d-grid gap-3">
+                <button type="submit" class="btn btn-success"><i class="bi bi-person-plus-fill me-2"></i>Register</button>
+                <a th:href="@{/}" class="btn btn-danger-custom"><i class="bi bi-arrow-left-circle me-2"></i>Back</a>
+            </div>
+
+            <p class="text-center mt-3">
+                Already registered?
+                <a th:href="@{/driver-login}" class="login-link">Login here</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function previewPhoto(event) {
+        const preview = document.getElementById('photoPreview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+        preview.style.display = "block";
+    }
+
+    function togglePassword() {
+        const pass = document.getElementById('password');
+        pass.type = pass.type === "password" ? "text" : "password";
+    }
+
+    const form = document.getElementById('driverForm');
+    const progress = document.getElementById('formProgress');
+    form.addEventListener('input', () => {
+        const total = form.querySelectorAll('input, select, textarea').length;
+        const filled = Array.from(form.querySelectorAll('input, select, textarea')).filter(el => el.value).length;
+        progress.style.width = (filled / total * 100) + "%";
+    });
+
+    function fetchAddressByPincode() {
+        const pincode = document.getElementById('pincode').value.trim();
+        if (pincode.length === 6) {
+            fetch(`https://api.postalpincode.in/pincode/${pincode}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data[0].Status === "Success") {
+                        const postData = data[0].PostOffice[0];
+                        document.getElementById('state').value = postData.State || "";
+                        document.getElementById('district').value = postData.District || "";
+                        document.getElementById('tehsil').value = postData.Block || postData.SubDistrict || "";
+                    } else {
+                        alert("Pincode not found. Please enter manually.");
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

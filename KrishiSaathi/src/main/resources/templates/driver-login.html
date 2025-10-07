@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Driver Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1619712228933-8df97ff31f87?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDQyNTV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTkxNjc5NTB8&ixlib=rb-4.1.0&q=85') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 0;
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            width: 100%;
+            max-width: 400px;
+            color: white;
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #00ff99;
+        }
+
+        .form-label {
+            color: #f2f4f3;
+            font-weight: 500;
+        }
+
+        /* Login Button */
+        .btn-success {
+            background: linear-gradient(45deg, #00ff99, #00b894);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #23c71a, #1db543);
+            transform: scale(1.05);
+        }
+
+        /* Back Button */
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #ff4b4b, #d63031);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        .btn-danger-custom:hover {
+            background: linear-gradient(45deg, #ff1e1e, #b22222);
+            transform: scale(1.05);
+            color: #fff !important;
+        }
+
+        /* Register Redirect */
+
+        .register-link {
+            color: #ffcc00;
+            /* yellow text */
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .register-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .register-link:hover {
+            color: #ffffff;
+            /* text turns white */
+            text-shadow: 0px 0px 8px #ffcc00;
+        }
+
+        .register-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h2>🚛 Driver Login</h2>
+
+            <form id="loginForm" th:action="@{/driver-login}" method="post">
+                <!-- Mobile Number -->
+                <div class="mb-3">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="tel" name="mobile" class="form-control" placeholder="Enter your mobile number" required
+                        pattern="[0-9]{10}" title="Enter 10-digit mobile number">
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <button class="btn btn-outline-light" type="button" onclick="togglePassword()">👁️</button>
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+            </form>
+
+            <!-- Back Button -->
+            <div class="d-grid mt-3">
+                <a th:href="@{/}" class="btn btn-danger-custom">Back</a>
+            </div>
+
+            <!-- Register Redirect -->
+            <p class="text-center mt-3">
+                Not registered yet?
+                <a th:href="@{/driver-registration}" class="register-link">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Password toggle
+        function togglePassword() {
+            const pass = document.getElementById('password');
+            pass.type = pass.type === "password" ? "text" : "password";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi-Saathi | Contact & Helpline</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #fdfbf5;
+            color: #0c2e0c;
+            line-height: 1.7;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #0c2e0c !important;
+            padding: 12px 30px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+        }
+
+        .navbar-brand h6 {
+            font-size: 0.65rem;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar Links */
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect */
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            /* Gold on hover */
+        }
+
+        /* Active Link Highlight */
+        .navbar-nav .nav-link.active {
+            color: #ffd700 !important;
+            font-weight: 600;
+        }
+
+        /* Underline Animation */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Toggler Icon Fix */
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        /* Default Navbar */
+        #mainNavbar {
+            background-color: #0c2e0c !important;
+            padding: 18px 30px;
+            transition: all 0.3s ease;
+        }
+
+        /* Shrinked Navbar on Scroll */
+        #mainNavbar.shrink {
+            padding: 8px 30px;
+            background-color: #0c2e0c !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        #mainNavbar .navbar-brand {
+            font-size: 1.3rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand {
+            font-size: 1.1rem;
+        }
+
+        #mainNavbar .navbar-brand h6 {
+            font-size: 0.65rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand h6 {
+            font-size: 0.55rem;
+        }
+
+        /* Optional: show dropdown on hover */
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        /* Dropdown item hover effect */
+        .dropdown-item:hover {
+            background-color: #2E7D32 !important;
+            color: #fff !important;
+        }
+
+        /* Navbar link hover */
+        .nav-link:hover {
+            color: #C8E6C9 !important;
+        }
+
+
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1607892408220-c80c0f8651d0?ixid=M3w4MDQyNTV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTc4NTQyNDJ8&ixlib=rb-4.1.0') center/cover no-repeat;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+
+        @media (min-width: 768px) {
+            .hero {
+                text-align: left;
+                padding: 60px;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero p {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Register Button Style */
+        .btn-custom-register {
+            display: inline-block;
+            width: 350px;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            background-color: #f8d000;
+            /* Yellow */
+            color: black;
+            text-decoration: none;
+            border: 2px solid #ffffff;
+            /* White border initially */
+            transition: all 0.35s ease;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Hover Effect */
+        .btn-custom-register:hover {
+            background-color: #0c2e0c;
+            /* Deep green */
+            color: #ffffff;
+            /* White text */
+            border: 2px solid #f8d000;
+            /* Yellow border */
+            box-shadow: 0 0 18px rgba(248, 208, 0, 0.9);
+            transform: scale(1.08);
+            /* Lift effect */
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #ffd700;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* District Section Styling */
+        #districtCards .contact-card {
+            background-color: #0c2e0c;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #districtCards .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* District name (white by default, golden on hover) */
+        #districtCards .contact-card h5 {
+            font-weight: bold;
+            color: #ffffff;
+            /* White initially */
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        #districtCards .contact-card:hover h5 {
+            color: #ffd700;
+            /* Golden on hover */
+        }
+
+        #districtCards .contact-card p {
+            margin-bottom: 6px;
+        }
+
+        /* Email links (blue → golden on hover) */
+        #districtCards .contact-card a {
+            color: #1e90ff;
+            /* Blue initially */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        #districtCards .contact-card a:hover {
+            color: #ffd700;
+            /* Gold on hover */
+            text-decoration: underline;
+        }
+
+
+
+
+        .contact-card {
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            background-color: #0c2e0c;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .contact-card h5 {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .contact-card a {
+            color: #ffd700;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Search Bar */
+        .search-box input {
+            border-radius: 30px;
+            padding: 12px 20px;
+            border: 2px solid #0c2e0c;
+        }
+
+        /* FAQ Styling */
+        .faq-section {
+            background: #f9faf9;
+        }
+
+        .faq-section .section-title {
+            color: #145a32;
+            font-weight: bold;
+        }
+
+        .accordion-button {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #145a32;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e9f7ef;
+            color: #0b3d1a;
+            box-shadow: none;
+        }
+
+        .accordion-body {
+            background: #f1f8f5;
+            padding: 15px 20px;
+            border-left: 4px solid #28a745;
+            border-radius: 5px;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+
+        /* Contact Form Section */
+        #contact {
+            background: url("https://source.unsplash.com/1600x800/?farm,field") center/cover no-repeat;
+            background-blend-mode: darken;
+            background-color: rgba(12, 46, 12, 0.9);
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            color: white;
+        }
+
+        #contact .form-control {
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        #contact button {
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            background: #ffd700;
+            border: none;
+            color: #0c2e0c;
+            transition: all 0.3s ease;
+        }
+
+        #contact button:hover {
+            background: #e6c200;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0c2e0c;
+            color: white;
+            padding: 20px 0;
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex flex-column align-items-center" href="#">
+                Krishi-Saathi
+                <h6>कृषिर्मूलं स्वराज्यस्य</h6>
+            </a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/contact}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/farmer-login}">Services</a></li>
+
+                    <!-- Drivers Dropdown with Icons -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Drivers
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="background-color:#388E3C;">
+                            <li>
+                                <a class="dropdown-item text-white" th:href="@{/driver-registration}">
+                                    <i class="bi bi-person-plus-fill me-2"></i> Registration
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-white" th:href="@{/driver-login}">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/more}">More</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Contact & Helpline</h1>
+        <p>Find your district agriculture office or reach us directly</p>
+        <a href="#contact" class="btn-custom-register"
+            style="display:inline-block; width:350px; text-align:center; padding:9px 0; font-size:0.9rem; border-radius:20px;">
+            Your Query
+        </a>
+    </section>
+
+    <!-- Emergency Numbers Section -->
+    <section class="container my-5">
+        <h2 class="section-title">Emergency & Quick Help</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>24x7 Farmer Helpline</h5>
+                    <p><i class="bi bi-telephone-fill me-2"></i>1800-180-1551</p>
+                    <p>Available in Hindi & English</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Natural Disaster Helpline</h5>
+                    <p><i class="bi bi-telephone-fill me-2"></i>1070</p>
+                    <p>For floods, landslides & crop loss</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Head Office Section -->
+    <section class="container my-5">
+        <h2 class="section-title">Head Office</h2>
+        <div class="contact-card text-white">
+            <h5>Directorate of Agriculture</h5>
+            <p><i class="bi bi-geo-alt-fill me-2"></i>Krishi Bhawan, Shimla, Himachal Pradesh – 171005</p>
+            <p><i class="bi bi-telephone-fill me-2"></i>0177-2830162</p>
+            <p><i class="bi bi-envelope-fill me-2"></i>krishibhawan-hp@gov.in</p>
+        </div>
+    </section>
+
+    <!-- Working Hours -->
+    <section class="container my-5">
+        <h2 class="section-title">Working Hours</h2>
+        <ul class="list-group shadow">
+            <li class="list-group-item">Monday – Friday: 9:30 AM – 5:30 PM</li>
+            <li class="list-group-item">Saturday: 9:30 AM – 1:30 PM</li>
+            <li class="list-group-item">Sunday & Holidays: Closed</li>
+        </ul>
+    </section>
+
+    <!-- District Search -->
+    <section class="container my-5">
+        <h2 class="section-title">District Agriculture Offices</h2>
+        <div class="search-box text-center mb-4">
+            <input type="text" id="districtSearch" class="form-control w-50 mx-auto"
+                placeholder="Search by district name...">
+        </div>
+        <div class="row" id="districtCards">
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Bilaspur</h5>
+                    <p>Phone: 01978-224001</p>
+                    <p>Email: <a href="mailto:bilaspur.agri@hp.gov.in">bilaspur.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Chamba</h5>
+                    <p>Phone: 01899-222206</p>
+                    <p>Email: <a href="mailto:chamba.agri@hp.gov.in">chamba.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Hamirpur</h5>
+                    <p>Phone: 01972-222297</p>
+                    <p>Email: <a href="mailto:hamirpur.agri@hp.gov.in">hamirpur.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Kangra</h5>
+                    <p>Phone: 01892-223217</p>
+                    <p>Email: <a href="mailto:kangra.agri@hp.gov.in">kangra.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Kinnaur</h5>
+                    <p>Phone: 01905-221008</p>
+                    <p>Email: <a href="mailto:kinnaur.agri@hp.gov.in">kinnaur.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Kullu</h5>
+                    <p>Phone: 01902-222018</p>
+                    <p>Email: <a href="mailto:kullu.agri@hp.gov.in">kullu.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Lahaul & Spiti</h5>
+                    <p>Phone: 01906-224004</p>
+                    <p>Email: <a href="mailto:lspiti.agri@hp.gov.in">lspiti.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Mandi</h5>
+                    <p>Phone: 01905-225201</p>
+                    <p>Email: <a href="mailto:mandi.agri@hp.gov.in">mandi.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Shimla</h5>
+                    <p>Phone: 0177-2620103</p>
+                    <p>Email: <a href="mailto:shimla.agri@hp.gov.in">shimla.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Sirmaur</h5>
+                    <p>Phone: 0172-2270203</p>
+                    <p>Email: <a href="mailto:sirmaur.agri@hp.gov.in">sirmaur.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Solan</h5>
+                    <p>Phone: 01792-223001</p>
+                    <p>Email: <a href="mailto:solan.agri@hp.gov.in">solan.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center text-white">
+                    <h5>Una</h5>
+                    <p>Phone: 01975-222250</p>
+                    <p>Email: <a href="mailto:una.agri@hp.gov.in">una.agri@hp.gov.in</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Map -->
+    <section class="container my-5 text-center">
+        <h2 class="section-title">Find Us on Map</h2>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.042121146902!2d77.1702!3d31.1048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390578f8e6f26a05%3A0x57b91bb5a1e30a!2sDirectorate%20of%20Agriculture%2C%20Shimla!5e0!3m2!1sen!2sin!4v1700000000000"
+            width="100%" height="400" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <!-- FAQ -->
+    <!-- FAQ Section -->
+    <section class="faq-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+
+                <!-- Q1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer1">
+                            How can I register as a farmer on this platform?
+                        </button>
+                    </h2>
+                    <div id="answer1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can register by clicking on the <b>“Register”</b> button in the navigation bar or home
+                            page. Fill out the farmer registration form with your details and submit.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer2">
+                            What documents are required for farmer registration?
+                        </button>
+                    </h2>
+                    <div id="answer2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You will need your Aadhaar card, a valid mobile number, a recent photograph, and details of
+                            your address and farming experience.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer3">
+                            Can I update my details after registration?
+                        </button>
+                    </h2>
+                    <div id="answer3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, you can log in using your credentials and update your profile information anytime.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer4">
+                            What should I do if I forget my login password?
+                        </button>
+                    </h2>
+                    <div id="answer4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Click on the <b>“Forgot Password”</b> link on the login page and follow the instructions to
+                            reset your password using your registered mobile number or email.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq5">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer5">
+                            How can I contact the agriculture helpline?
+                        </button>
+                    </h2>
+                    <div id="answer5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can find district-wise helpline numbers on the <b>Contact Us</b> page. You may also call
+                            the state agriculture head office directly for urgent queries.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq6">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer6">
+                            Are there any government schemes I can apply for through this portal?
+                        </button>
+                    </h2>
+                    <div id="answer6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, our platform shares updates about the latest government schemes and subsidies for
+                            farmers. You can view details in the <b>Updates/Announcements</b> section.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq7">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#answer7">
+                            Can I track my crop-related activities here?
+                        </button>
+                    </h2>
+                    <div id="answer7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, once logged in, you will have access to modules that allow you to track farming
+                            activities, expenses, and get expert advice.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Social Media -->
+    <section class="container my-5 text-center">
+        <h2 class="section-title">Stay Connected</h2>
+        <p>Follow Krishi-Saathi on social media for latest updates and schemes.</p>
+        <div>
+            <a href="#" class="mx-2"><i class="bi bi-facebook" style="font-size:2rem; color:#1877f2;"></i></a>
+            <a href="#" class="mx-2"><i class="bi bi-twitter-x" style="font-size:2rem; color:black;"></i></a>
+            <a href="#" class="mx-2"><i class="bi bi-instagram" style="font-size:2rem; color:#e4405f;"></i></a>
+            <a href="#" class="mx-2"><i class="bi bi-youtube" style="font-size:2rem; color:#ff0000;"></i></a>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="text-center">
+        <div class="container">
+            <h2 class="section-title text-white">Send Your Query</h2>
+            <p class="mb-4">We would love to hear from you. Fill out the form below and we will get back to you soon.
+            </p>
+            <form class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="tel" name="mobile" class="form-control" placeholder="Enter Mobile Number" required
+                        pattern="[0-9]{10}" title="Enter 10-digit mobile number">
+                </div>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" placeholder="Your Email">
+                </div>
+                <div class="col-10">
+                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <div class="col-10">
+                    <button type="submit">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            © 2025 Krishi Saathi | Designed by <strong>Tech-Innovators</strong>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script>
+        // Shrink navbar on scroll
+        window.addEventListener("scroll", function () {
+            const navbar = document.getElementById("mainNavbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("shrink");
+            } else {
+                navbar.classList.remove("shrink");
+            }
+        });
+
+        // Search filter for districts
+        document.getElementById("districtSearch").addEventListener("keyup", function () {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll("#districtCards .col-md-4").forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? "" : "none";
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

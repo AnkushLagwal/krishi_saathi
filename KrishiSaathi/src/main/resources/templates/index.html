@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi-Saathi</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Cormorant+Garamond:wght@400;500&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #fdfbf5;
+            color: #0c2e0c;
+            line-height: 1.7;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #0c2e0c !important;
+            padding: 12px 30px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+        }
+
+        .navbar-brand h6 {
+            font-size: 0.65rem;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar Links */
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect */
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            /* Gold on hover */
+        }
+
+        /* Active Link Highlight */
+        .navbar-nav .nav-link.active {
+            color: #ffd700 !important;
+            font-weight: 600;
+        }
+
+        /* Underline Animation */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Toggler Icon Fix */
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        /* Default Navbar */
+        #mainNavbar {
+            background-color: #0c2e0c !important;
+            padding: 18px 30px;
+            transition: all 0.3s ease;
+        }
+
+        /* Shrinked Navbar on Scroll */
+        #mainNavbar.shrink {
+            padding: 8px 30px;
+            background-color: #0c2e0c !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        #mainNavbar .navbar-brand {
+            font-size: 1.3rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand {
+            font-size: 1.1rem;
+        }
+
+        #mainNavbar .navbar-brand h6 {
+            font-size: 0.65rem;
+            transition: font-size 0.3s ease;
+        }
+
+        #mainNavbar.shrink .navbar-brand h6 {
+            font-size: 0.55rem;
+        }
+
+        /* Optional: show dropdown on hover */
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        /* Dropdown item hover effect */
+        .dropdown-item:hover {
+            background-color: #2E7D32 !important;
+            color: #fff !important;
+        }
+
+        /* Navbar link hover */
+        .nav-link:hover {
+            color: #C8E6C9 !important;
+        }
+
+        
+
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1636958925527-1c98a88458d2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDQyNTV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTc4Mzk4Mjl8&ixlib=rb-4.1.0&q=85') center/cover no-repeat;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+
+        @media (min-width: 768px) {
+            .hero {
+                text-align: left;
+                padding: 60px;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero p {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Register Button Style */
+        .btn-custom-register {
+            display: inline-block;
+            width: 350px;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            background-color: #f8d000;
+            /* Yellow */
+            color: black;
+            text-decoration: none;
+            border: 2px solid #ffffff;
+            /* White border initially */
+            transition: all 0.35s ease;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Hover Effect */
+        .btn-custom-register:hover {
+            background-color: #0c2e0c;
+            /* Deep green */
+            color: #ffffff;
+            /* White text */
+            border: 2px solid #f8d000;
+            /* Yellow border */
+            box-shadow: 0 0 18px rgba(248, 208, 0, 0.9);
+            transform: scale(1.08);
+            /* Lift effect */
+        }
+
+        /* Elegant Wix-style Button (Reusable) */
+        .btn-custom {
+            margin-top: 20px;
+            padding: 12px 32px;
+            border: 2px solid white;
+            background: white;
+            color: #0c2e0c;
+            border-radius: 40px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-custom:hover {
+            background: #f5f5f5;
+            color: #0c2e0c;
+            transform: scale(1.07);
+            /*  Add a little zoom effect if you like */
+        }
+
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* Section Backgrounds */
+        .dark-section {
+            background: #0c2e0c;
+            color: white;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .light-section {
+            background: #d6ecd1;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .light-section h6 {
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+
+
+        /* Services */
+        .service-box {
+            background: #0c2e0c;
+            /* Keep your green tone */
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            /* smooth animation */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .service-box h4 {
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .service-box h5 {
+            font-size: 1rem;
+            font-weight: normal;
+        }
+
+        /* Hover Effects */
+        .service-box:hover {
+            transform: translateY(-8px) scale(1.03);
+            background: linear-gradient(135deg, #145214, #0c2e0c);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-box:hover h4,
+        .service-box:hover h5 {
+            color: #ffd700;
+            /* gold text effect */
+            transition: color 0.3s ease;
+        }
+
+        /* Button Styling */
+        .btn-custom {
+            display: inline-block;
+            width: 120px;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            background: #ffffff;
+            color: #0c2e0c;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: #ffd700;
+            color: #0c2e0c;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+
+        /* Advantages Section */
+        .advantage-section {
+            background-color: #002d16;
+            /* Dark Green */
+            color: #ffffff;
+            text-align: center;
+            padding: 80px 20px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+
+        .advantage-header .subtitle {
+            /* Header Styling */
+            font-size: 16px;
+            color: #dcdcdc;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .advantage-header .title {
+            font-size: 42px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .advantage-header .description {
+            font-size: 18px;
+            color: #dcdcdc;
+            margin-bottom: 60px;
+        }
+
+        .advantage-cards {
+            /* Cards Grid */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .adv-card {
+            /* Individual Card */
+            background: #f9f7f2;
+            /* Cream Color */
+            color: #002d16;
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .adv-card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .adv-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .adv-card p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .adv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .explore-btn {
+            margin-top: 50px;
+        }
+
+        .btn {
+            background: #f9f7f2;
+            color: #002d16;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #004d26;
+            color: #ffffff;
+        }
+
+
+        /* Contact Section */
+        #contact {
+            background: url("https://source.unsplash.com/1600x800/?farm,field") center/cover no-repeat;
+            background-blend-mode: darken;
+            background-color: #0c2e0c;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            color: white;
+        }
+
+        #contact .form-control {
+            /* Input & Textarea Styles */
+            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #contact .form-control:hover {
+            /* Hover Effect */
+            border-color: #ffd700;
+            /* Gold border on hover */
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+
+        #contact .form-control:focus {
+            /* Focus Effect (when clicked) */
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            outline: none;
+        }
+
+        #contact button {
+            /* Button */
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s ease;
+        }
+
+        #contact button:hover {
+            /* Button Hover */
+            background: #ffd700;
+            color: #0c2e0c;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* About Section */
+        #about {
+            background: #d6ecd1;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            color: black;
+        }
+
+        .about-box {
+            background: #d6ecd1;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #about h5 {
+            /* Headings with Icons */
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .about-link {
+            /* Quick Links */
+            color: black;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-block;
+            margin: 6px 0;
+        }
+
+        .about-link:hover {
+            color: #0c2e0c;
+            transform: translateX(5px);
+        }
+
+        .social-icons a {
+            /* Social Icons */
+            font-size: 20px;
+            color: #0c2e0c;
+            margin: 0 8px;
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #145214;
+            transform: scale(1.2);
+        }
+
+        #about hr {
+            /* Divider */
+            border: 0;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin: auto;
+        }
+
+        /* Footer */
+        .footer {
+            color: #fff;
+        }
+
+        .footer .text-center {
+            background-color: #0c2e0c;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top shadow-sm" style="background-color:#4CAF50;">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex flex-column align-items-center text-white" href="#">
+                Krishi-Saathi
+                <h6 style="font-size:0.7rem;">कृषिर्मूलं स्वराज्यस्य</h6>
+            </a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active text-white" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/contact}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/farmer-login}">Services</a></li>
+
+                    <!-- Drivers Dropdown with Icons -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Drivers
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="background-color:#388E3C;">
+                            <li>
+                                <a class="dropdown-item text-white" th:href="@{/driver-registration}">
+                                    <i class="bi bi-person-plus-fill me-2"></i> Registration
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-white" th:href="@{/driver-login}">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/about}">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/more}">More</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Empowering<br>Agriculture</h1>
+        <p>Enhancing Farming with Technology</p>
+        <a th:href="@{/farmer-registration}" class="btn-custom-register"
+            style="display:inline-block; width:350px; text-align:center; padding:9px 0; font-size:0.9rem; border-radius:20px;">
+            Register Here
+        </a>
+    </section>
+
+
+    <!--ALERTS-->
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Hi User!</strong> You have to register first to get the access of all services.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    <!-- Services Section -->
+    <section class="container my-5">
+        <h2 class="section-title text-center text-black">Services and Innovations</h2>
+        <div class="row mt-4 align-items-stretch">
+
+            <!-- Left Column -->
+            <div class="col-md-6 d-flex flex-column">
+                <div class="d-flex flex-column flex-fill">
+                    <div class="row g-3 h-100">
+
+                        <div class="col-12">
+                            <div class="service-box h-100 d-flex flex-column justify-content-between align-items-center text-center text-white p-4"
+                                style="background-color: #0c2e0c;">
+                                <div>
+                                    <h4>01 Crop Guidance</h4>
+                                    <h5>Crop Protection and Guidance System</h5>
+                                </div>
+                                <a th:href="@{/farmer-login}" class="btn-custom"
+                                    style="display:inline-block; width:120px; padding:6px 0; font-size:0.9rem; border-radius:20px;">
+                                    Explore
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="service-box h-100 d-flex flex-column justify-content-between align-items-center text-center text-white p-4"
+                                style="background-color: #0c2e0c;">
+                                <div>
+                                    <h4>02 Market Access</h4>
+                                    <h5>Connecting farmers with nearest mandis and markets</h5>
+                                </div>
+                                <a th:href="@{/farmer-login}" class="btn-custom"
+                                    style="display:inline-block; width:120px; padding:6px 0; font-size:0.9rem; border-radius:20px;">
+                                    Explore
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="service-box h-100 d-flex flex-column justify-content-between align-items-center text-center text-white p-4"
+                                style="background-color: #0c2e0c;">
+                                <div>
+                                    <h4>03 Transport Facility</h4>
+                                    <h5>Easy crop transport with registered drivers</h5>
+                                </div>
+                                <a th:href="@{/farmer-login}" class="btn-custom"
+                                    style="display:inline-block; width:120px; padding:6px 0; font-size:0.9rem; border-radius:20px;">
+                                    Explore
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="service-box h-100 d-flex flex-column justify-content-between align-items-center text-center text-white p-4"
+                                style="background-color: #0c2e0c;">
+                                <div>
+                                    <h4>04 Profit Calculator</h4>
+                                    <h5>Calculating crop prices and profits</h5>
+                                </div>
+                                <a th:href="@{/farmer-login}" class="btn-custom"
+                                    style="display:inline-block; width:120px; padding:6px 0; font-size:0.9rem; border-radius:20px;">
+                                    Explore
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column (Image with Equal Height) -->
+            <div class="col-md-6 d-flex align-items-stretch">
+                <div class="w-100 h-100">
+                    <img src="https://images.unsplash.com/photo-1533576228315-348d91b938f8?ixid=M3w4MDQyNTV8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NTc4NDkzMDd8&ixlib=rb-4.1.0"
+                        alt="farming" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 15px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Advantages Section -->
+    <section class="advantage-section">
+        <div class="advantage-header">
+            <p class="subtitle">Why Choose Krishi-Saathi</p>
+            <h2 class="title">The Krishi-Saathi Advantage</h2>
+            <p class="description">
+                Choose us for innovative solutions that redefine agricultural practices.
+            </p>
+        </div>
+
+        <div class="advantage-cards">
+            <div class="adv-card">
+                <div class="icon">🍏</div>
+                <h3>Advanced Technology</h3>
+                <p>We leverage the latest technology to deliver efficient and sustainable farming solutions.</p>
+            </div>
+
+            <div class="adv-card">
+                <div class="icon">🌼</div>
+                <h3>Expert Team</h3>
+                <p>Our team of experts ensures top-notch guidance and support for your agricultural needs.</p>
+            </div>
+
+            <div class="adv-card">
+                <div class="icon">🌸</div>
+                <h3>Customer-Centric Approach</h3>
+                <p>We prioritize customer satisfaction by tailoring solutions to meet specific agricultural
+                    requirements.</p>
+            </div>
+
+            <div class="adv-card">
+                <div class="icon">🍊</div>
+                <h3>Sustainability Focus</h3>
+                <p>Our solutions are designed to promote sustainable farming practices and environmental conservation.
+                </p>
+            </div>
+
+            <!-- ✅ New Card 1 -->
+            <div class="adv-card">
+                <div class="icon">🚜</div>
+                <h3>Smart Farming Tools</h3>
+                <p>We provide modern tools and digital platforms that help farmers optimize productivity and reduce
+                    effort.</p>
+            </div>
+
+            <!-- ✅ New Card 2 -->
+            <div class="adv-card">
+                <div class="icon">🌱</div>
+                <h3>Future-Ready Solutions</h3>
+                <p>Our innovations prepare farmers for tomorrow with climate-resilient, eco-friendly agricultural
+                    practices.</p>
+            </div>
+        </div>
+
+        <!-- <div class="explore-btn">
+          <a href="#" class="btn">Explore More</a>
+        </div> -->
+    </section>
+
+
+
+
+    <!-- Expertise -->
+    <section class="dark-section text-center">
+        <h2 class="section-title">Our Expertise</h2>
+        <a th:href="@{/about}" class="btn-custom">Read More</a>
+    </section>
+
+
+    <!-- Vision -->
+    <section class="light-section">
+        <h2 class="section-title text-center">Our Vision</h2>
+        <h6 class="text-center">Krishi-Saathi is dedicated...</h6>
+        <p>
+        <h2>
+            Krishi-Saathi is dedicated to providing crops and diseases protection guidance system,
+            nearest mandis/markets and their prices, and transport facilities for moving crops to the
+            market by connecting with registered vehicle drivers. Our focus is on enhancing agricultural
+            productivity and sustainability through advanced technology.
+        </h2>
+        </p>
+        <div class="text-center">
+            <a href="#" class="btn-custom">Discover More</a>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="text-center">
+        <div class="container">
+            <h2 class="section-title text-white">Get in Touch</h2>
+            <p class="mb-4">We would love to hear from you. Fill out the form below and we will get back to you soon.
+            </p>
+            <form class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="tel" name="mobile" class="form-control" placeholder="Enter Mobile Number" required
+                        pattern="[0-9]{10}" title="Enter 10-digit mobile number">
+                </div>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" placeholder="Your Email">
+                </div>
+                <div class="col-10">
+                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <div class="col-10">
+                    <button type="submit" class="btn btn-light">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="text-center">
+        <div class="row">
+            <!-- About -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-info-circle-fill me-2"></i> About Us
+                </h5>
+                <p>
+                    We create innovative digital solutions to help businesses and individuals
+                    build a strong online presence. Our mission is to deliver quality,
+                    creativity, and long-term value to our clients.
+                </p>
+                <p>
+                    <strong>Our Mission:</strong> To empower communities with modern, reliable,
+                    and affordable technology solutions.
+                </p>
+                <p>
+                    <strong>Our Vision:</strong> To become a trusted digital partner for
+                    individuals, farmers, and businesses across the globe.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-link-45deg me-2"></i> Quick Links
+                </h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="about-link">Home</a></li>
+                    <li><a href="#" class="about-link">Services</a></li>
+                    <li><a href="#" class="about-link">About</a></li>
+                    <li><a href="#" class="about-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">
+                    <i class="bi bi-envelope-paper-fill me-2"></i> Contact
+                </h5>
+                <p><i class="bi bi-geo-alt-fill me-2"></i> Solan, Himachal Pradesh</p>
+                <p><i class="bi bi-telephone-fill me-2"></i>+91 9805657931</p>
+                <p><i class="bi bi-envelope-fill me-2"></i>info@example.com</p>
+
+                <!-- Social Media -->
+                <div class="social-icons mt-3">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center"
+        style="background: url('https://source.unsplash.com/1600x900/?technology,business') no-repeat center center/cover;">
+        <div class="text-center p-4">
+            © 2025 Krishi Saathi | Designed by <strong>Tech-Innovators</strong>
+        </div>
+    </footer>
+
+
+    <!-- navbar -->
+    <script>
+        window.addEventListener("scroll", function () {
+            const navbar = document.getElementById("mainNavbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("shrink");
+            } else {
+                navbar.classList.remove("shrink");
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
